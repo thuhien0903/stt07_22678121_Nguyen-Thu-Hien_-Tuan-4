@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FlowerBox 360 - Luxury Roses</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        body, html {
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+        }
+
+        .wrapper {
+            max-width: 1200px; /* Increased for larger screens */
+            background-color: antiquewhite;
+            margin: 0 auto;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            position: relative;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        header {
+            background-color: #d84315;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 30px; /* Increased padding for better spacing */
+        }
+
+        header img {
+            height: 80px; /* Adjusted height for balance */
+            width: auto; /* Maintain aspect ratio */
+            transition: all 0.3s ease; 
+        }
+
+        header h2 {
+            color: white;
+            font-size: 28px; /* Slightly larger font size */
+            margin: 0; /* Remove default margin */
+            transition: all 0.3s ease;
+        }
+
+        header h4 {
+            color: white;
+            font-size: 18px; /* Slightly larger font size */
+            margin: 5px 0 0; /* Adjust margin for better spacing */
+            transition: all 0.3s ease;
+        }
+
+        #frm {
+            display: flex;
+            align-items: center;
+        }
+
+        #txtS {
+            border: 1px solid gray;
+            padding: 8px 12px; /* Increased padding for better visual */
+            margin-right: 10px;
+            border-radius: 5px;
+            flex-grow: 1;
+        }
+
+        #btnS {
+            border: none; /* Remove border for cleaner look */
+            padding: 8px 15px; /* Increased padding for better visual */
+            border-radius: 5px;
+            background-color: cadetblue;
+            color: white;
+            cursor: pointer;
+        }
+
+        nav {
+            margin-top: 10px;
+            background-color: #e6e6e6;
+            padding: 10px 0;
+        }
+
+        .menu {
+            list-style-type: none;
+            padding: 0;
+            margin: 0;
+            text-align: center;
+        }
+
+        .menu li {
+            display: inline-block;
+            padding: 10px 15px;
+            margin: 0 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .menu li:hover {
+            background-color: #ddd;
+        }
+
+        .menu li a {
+            color: #333;
+            font-weight: bold;
+            text-decoration: none;
+        }
+
+        .sub-menu {
+            display: none;
+            position: absolute;
+            background-color: #f0f0f0;
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            border-radius: 5px;
+            z-index: 1;
+        }
+
+        .menu li:hover .sub-menu {
+            display: block;
+            top: 100%;
+        }
+
+        .sub-menu li {
+            padding: 8px 15px;
+            white-space: nowrap;
+        }
+
+        .content {
+            padding: 30px; /* Increased padding for better spacing */
+            text-align: center;
+            flex: 1;
+        }
+
+        .featured-image {
+            max-width: 100%;
+            height: auto;
+            margin-top: 20px;
+            border-radius: 10px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+        }
+
+        footer {
+            height: 80px;
+            width: 100%;
+            background-color: #294e79;
+            color: white;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 0 20px;
+            position: absolute;
+            bottom: 0;
+            left: 0;
+        }
+
+        .featured-products {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-top: 30px;
+        }
+
+        .product {
+            text-align: left;
+            width: calc(33.33% - 20px);
+            margin: 10px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            border-radius: 5px;
+            overflow: hidden;
+            padding: 20px; /* Increased padding for better visual */
+        }
+
+        .product img {
+            max-width: 100%;
+            height: auto;
+            transition: transform 0.3s ease;
+            border-radius: 5px; /* Added border-radius to images */
+        }
+
+        .product:hover img {
+            transform: scale(1.05);
+        }
+
+        .product .price {
+            color: #3e569c;
+            font-weight: bold;
+            margin-top: 10px; /* Increased margin for better spacing */
+            font-size: 18px; /* Slightly larger font size */
+        }
+
+        .product .add-to-cart {
+            display: inline-block;
+            padding: 10px 20px; /* Increased padding for better visual */
+            background-color: #4CAF50;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            margin-top: 15px; /* Increased margin for better spacing */
+            transition: background-color 0.3s ease;
+            font-size: 16px; /* Slightly larger font size */
+        }
+
+        .product .add-to-cart:hover {
+            background-color: #3e8e41;
+        }
+
+        /* Hamburger menu */
+        .hamburger {
+            display: none;
+            font-size: 24px;
+            cursor: pointer;
+            color: white;
+        }
+
+        .menu.responsive {
+            display: block;
+        }
+
+        .menu.responsive li {
+            display: block;
+            text-align: left;
+        }
+
+        /* Media queries for responsive design */
+        @media (max-width: 768px) { 
+            .wrapper {
+                width: 90%; 
+            }
+
+            header {
+                flex-direction: column; 
+                height: auto; 
+                padding: 10px 20px; /* Adjusted padding for smaller screens */
+            }
+
+            header img {
+                height: 60px;  /* Further adjusted height for smaller screens */
+                margin-bottom: 10px;
+            }
+
+            header h2 {
+                font-size: 24px; 
+            }
+
+            header h4 {
+                font-size: 16px; 
+                margin-bottom: 15px;
+            }
+
+            .hamburger {
+                display: block; 
+            }
+
+            .menu li {
+                display: none; 
+            }
+
+            .menu.responsive li {
+                display: block;
+            }
+
+            
+            .product {
+                width: calc(50% - 20px); 
+            }
+        }
+
+        @media (max-width: 480px) {
+            .product {
+                width: 100%; 
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="wrapper">
+        <header>
+            <img src="../img/flower.jpg"Flower Logo">
+            <div>
+                <h2>Flower in my eyes </h2>
+                <h4>...to get your daily close of luxury roses!</h4>
+            </div>
+            <div>
+                <form action="" method="post" id="frm">
+                    <input type="text" name="txts" id="txtS" placeholder="Search" required>
+                    <button type="submit" id="btnS">
+                        <i class="fas fa-search"></i> 
+                    </button>
+                </form>
+                <div class="hamburger" onclick="toggleMenu()">
+                    <i class="fas fa-bars"></i>
+                </div>
+            </div>
+        </header>
+
+        <nav></nav>
+            <ul class="menu">
+                <li><a href="#">Home</a></li>
+                <li><a href="#">Promotion</a></li>
+                <li><a href="#">Gift Baskets</a></li>
+                <li>
+                    <a href="#">Flower Services</a>
+                    <ul class="sub-menu">
+                        <li><a href="#">Wedding</a></li>
+                        <li><a href="#">Events</a></li>
+                        <li><a href="#">Corporate</a></li>
+                    </ul>
+                </li>
+                <li><a href="#">About</a></li>
+            </ul>
+        </nav>
+
+        <div class="content">
+            <h2>Welcome to Flower in my eyes </h2>
+            <p>We offer a variety of luxury roses and floral arrangements tailored for any occasion. Explore our collection to find the perfect bouquet for weddings, corporate events, or special promotions. Indulge in elegance every day with Flower in my eyes!</p>
+            <img src="../img/flowers.jpg"
+            <a href="#" class="btn">Explore Our Collection</a>
+
+            <h3>Featured Products</h3>
+            <div class="featured-products">
+                <div class="product">
+                    <img src="../img/flower1.jpg" alt="Product 1">
+                    <h4>Eternal Romance</h4>
+                    <p>A dozen long-stemmed red roses, symbolizing everlasting love.</p>
+                    <p class="price">$180.09</p>
+                    <a href="#" class="add-to-cart">Add to Cart</a>
+                </div>
+                <div class="product">
+                    <img src="../img/flower2.jpg" alt="Product 2">
+                    <h4>Golden Elegance</h4>
+                    <p>A luxurious bouquet of 24k gold-dipped roses, perfect for a special occasion.</p>
+                    <p class="price">$250.09</p>
+                    <a href="#" class="add-to-cart">Add to Cart</a>
+                </div>
+                <div class="product"> 
+                    <img src="../img/flower3.jpg" alt="Product 3">
+                    <h4>Whispering Bliss</h4>
+                    <p>A delicate arrangement of pastel-colored roses, conveying serenity and joy.</p>
+                    <p class="price">$120.09</p>
+                    <a href="#" class="add-to-cart">Add to Cart</a>
+                </div> 
+            </div> 
+        </div>
+
+        <footer>
+            <p>&copy; 2024 Flower in my eyes | Designed with love for luxury roses</p>
+        </footer>
+    </div>
+
+    <script>
+        function toggleMenu() {
+            var menu = document.querySelector('.menu');
+            menu.classList.toggle('responsive');
+        }
+    </script>
+</body>
+
+</html>
